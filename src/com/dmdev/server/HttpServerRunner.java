@@ -3,7 +3,7 @@ package com.dmdev.server;
 public class HttpServerRunner {
 
 	public static void main(String[] args) {
-		new HttpServer(9000).run();
+		new HttpServer(9000, 100).run();
 
 	}
 
