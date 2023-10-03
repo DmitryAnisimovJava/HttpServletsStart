@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Map;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -22,6 +23,10 @@ public class FirstServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String paramValue = req.getParameter("param");
+		Map<String,String[]> parameterMap = req.getParameterMap();
+		System.out.println();
+		
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.setHeader("token", "12345");
 		Enumeration<String> headerNames = req.getHeaderNames();
@@ -32,6 +37,12 @@ public class FirstServlet extends HttpServlet {
 		try (PrintWriter writer = resp.getWriter()) {
 			writer.write("Привет с первого сервлета");
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Map<String, String[]> writer = req.getParameterMap();
+		System.out.println(writer);
 	}
 
 	@Override
