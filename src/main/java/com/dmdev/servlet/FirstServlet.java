@@ -1,10 +1,12 @@
 package com.dmdev.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -25,8 +27,7 @@ public class FirstServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String paramValue = req.getParameter("param");
 		Map<String,String[]> parameterMap = req.getParameterMap();
-		System.out.println();
-		
+		System.out.println();	
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.setHeader("token", "12345");
 		Enumeration<String> headerNames = req.getHeaderNames();
@@ -41,12 +42,16 @@ public class FirstServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Map<String, String[]> writer = req.getParameterMap();
-		System.out.println(writer);
+		try (BufferedReader reader = req.getReader(); 
+			Stream<String>	lines = reader.lines()) {
+			lines.forEach(System.out::println);
+		};
+		
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
 	}
+	
 }
