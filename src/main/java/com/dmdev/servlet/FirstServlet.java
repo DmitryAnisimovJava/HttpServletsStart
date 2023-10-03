@@ -2,6 +2,8 @@ package com.dmdev.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Enumeration;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -20,9 +22,15 @@ public class FirstServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.setHeader("token", "12345");
+		Enumeration<String> headerNames = req.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String header = headerNames.nextElement();
+			System.out.println(req.getHeader(header));
+		}
 		try (PrintWriter writer = resp.getWriter()) {
-			writer.write("Hello from First Servlet");
+			writer.write("Привет с первого сервлета");
 		}
 	}
 
